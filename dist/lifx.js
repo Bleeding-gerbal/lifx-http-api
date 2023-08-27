@@ -373,7 +373,7 @@ Client.prototype.cycle = function (selector, settings, cb) {
  * @param {function} cb
  * @returns {*} either the promise or nothing
  */
-Client.prototype.activateScene = function (selector, duration, cb) {
+Client.prototype.activateScene = function (selector, settings, cb) {
     var deferred = Q.defer();
 
     selector = selector || 'all';
@@ -381,10 +381,10 @@ Client.prototype.activateScene = function (selector, duration, cb) {
         throw new Error('Selector is not valid.');
     }
 
-    duration = duration || 0;
+    settings = settings || {};
     this.send({
         url: 'scenes/' + selector + '/activate',
-        body: { duration: duration },
+        body: settings,
         method: 'PUT'
     }, function (err, data) {
         if (err) deferred.reject(err);else deferred.resolve(data);
